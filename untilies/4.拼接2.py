@@ -28,7 +28,7 @@ import argparse
 from tqdm import tqdm
 from PIL import Image
 
-# python 3.gerenate_data.py /home/shuhaog/PrePOCR/data/Novel_data_UTF8_processed/alice.txt
+# python 3.gerenate_data.py ../data/Novel_data_UTF8_processed/alice.txt
 
 # 假设 generate_base_image 和 add_noise_and_reduce_resolution 已在 generate_base_add_noise 模块中定义
 sys.path.append(str(Path('../function')))  # 添加当前目录到模块搜索路径
@@ -102,12 +102,12 @@ def generate_random_filename():
 def main():
     # ---------------- 主流程 ----------------
     # 你两张图片的路径
-    folder_path = "/home/shuhaog/PrePOCR/data/full_pic_low_res/base"
+    folder_path = "../data/full_pic_low_res/base"
     two_files = pick_two_random_jpg_files(folder_path)
     img_path_1 = two_files[0]
     img_path_2 = two_files[1]
-    # img_path_1 = "/home/shuhaog/PrePOCR/data/full_pic_low_res/base/97764590890_0.jpg"
-    # img_path_2 = "/home/shuhaog/PrePOCR/data/full_pic_low_res/base/98038681385_0.jpg"
+    # img_path_1 = "../data/full_pic_low_res/base/97764590890_0.jpg"
+    # img_path_2 = "../data/full_pic_low_res/base/98038681385_0.jpg"
 
     # 打开图像
     img1 = Image.open(img_path_1)

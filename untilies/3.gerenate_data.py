@@ -6,7 +6,7 @@ import argparse
 from tqdm import tqdm
 from PIL import Image
 
-# python 3.gerenate_data.py /home/shuhaog/PrePOCR/data/Novel_data_UTF8_processed/alice.txt
+# python 3.gerenate_data.py ../data/Novel_data_UTF8_processed/alice.txt
 
 # 假设 generate_base_image 和 add_noise_and_reduce_resolution 已在 generate_base_add_noise 模块中定义
 sys.path.append(str(Path('../function')))  # 添加当前目录到模块搜索路径

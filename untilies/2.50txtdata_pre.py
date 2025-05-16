@@ -1,8 +1,8 @@
 import os
 
 # 设置文件路径
-input_folder = "/home/shuhaog/PrePOCR/data/Novel_data_UTF8"
-output_folder = "/home/shuhaog/PrePOCR/data/Novel_data_UTF8_processed"
+input_folder = "../data/Novel_data_UTF8"
+output_folder = "../data/Novel_data_UTF8_processed"
 
 # 设置行的最大长度，超过此长度将自动换行
 max_line_length = 80  # 设置为印刷书本的平均长度

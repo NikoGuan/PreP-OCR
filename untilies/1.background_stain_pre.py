@@ -49,7 +49,7 @@ def process_folder(input_folder, output_folder, white_threshold=240, ink_thresho
         lighten_and_make_transparent(img_file, output_file, white_threshold, ink_threshold, lighten_factor)
 
 # 设置输入和输出文件夹路径
-base_folder = "/home/shuhaog/PrePOCR/noise_img"
+base_folder = "../noise_img"
 background_input = f"{base_folder}/background"
 stain_input = f"{base_folder}/stain"
 

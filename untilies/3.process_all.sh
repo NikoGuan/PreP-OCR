@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 定义文件夹路径和 Python 脚本路径
-INPUT_FOLDER="/home/shuhaog/PrePOCR/data/Novel_data_UTF8_processed"
-PYTHON_SCRIPT="python /home/shuhaog/PrePOCR/untilies/3.gerenate_data.py"
+INPUT_FOLDER="../data/Novel_data_UTF8_processed"
+PYTHON_SCRIPT="python ../untilies/3.gerenate_data.py"
 
 # 设置并发的最大任务数
 MAX_JOBS=50
