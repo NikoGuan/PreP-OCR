@@ -57,14 +57,13 @@ class OCRDataGenerator:
                 lines = f.readlines()
             
             # 90% chance: normal length (15-25 lines)
-            # 10% chance: short length (1 to normal_max lines)
+            # 10% chance: varied length (1 to 45 lines)
             if random.random() < 0.9:
                 # Normal length
-                lines_per_image = random.randint(15, 25)
+                lines_per_image = random.randint(15, 45)
             else:
-                # Short length for variety
-                normal_max = 25
-                lines_per_image = random.randint(1, normal_max)
+                # Varied length for diversity
+                lines_per_image = random.randint(1, 45)
             
             if len(lines) >= lines_per_image:
                 start_idx = random.randint(0, len(lines) - lines_per_image)
@@ -107,7 +106,7 @@ class OCRDataGenerator:
         for i in range(num_images):
             try:
                 # Get text content that fits properly
-                text_content, source_file, attempt_info = self.get_text_chunk_that_fits()
+                text_content, source_file, _ = self.get_text_chunk_that_fits()
                 
                 # Generate base image with conservative settings
                 preset = random.randint(1, 8)
