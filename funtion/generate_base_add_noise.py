@@ -188,8 +188,11 @@ def generate_base_image(text, preset=1, **kwargs):
     
     # 计算总宽度和高度
     text_width = max(sum(draw.textbbox((0, 0), char, font=font)[2] + char_spacing for char in line) - char_spacing for line in lines)
-    text_height = sum(draw.textbbox((0, 0), line, font=font)[3] for line in lines)
-    total_height = text_height + line_spacing * (len(lines) - 1)
+    
+    # 使用单行高度计算总高度，更准确
+    single_line_bbox = draw.textbbox((0, 0), "Ag", font=font)  # 使用包含上下伸部的字符
+    line_height = single_line_bbox[3] - single_line_bbox[1]    # 实际行高
+    total_height = line_height * len(lines) + line_spacing * max(0, len(lines) - 1)
 
     # 创建底图，考虑页边距
     base_image_width = text_width + left_margin + right_margin
@@ -232,8 +235,8 @@ def generate_base_image(text, preset=1, **kwargs):
             char_width = text_draw.textbbox((0, 0), char, font=font)[2]
             x += char_width + char_spacing
 
-        # 更新 y 坐标，加上行高和行距
-        y += font_size + line_spacing
+        # 更新 y 坐标，加上实际行高和行距
+        y += line_height + line_spacing
 
     # 旋转透明图层
     rotated_text_layer = text_layer.rotate(angle, expand=True)
