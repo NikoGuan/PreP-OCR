@@ -56,8 +56,15 @@ class OCRDataGenerator:
             with open(text_file, 'r', encoding='utf-8') as f:
                 lines = f.readlines()
             
-            # Use fewer lines to ensure they fit in image
-            lines_per_image = random.randint(15, 25)  # Reduced from 30
+            # 90% chance: normal length (15-25 lines)
+            # 10% chance: short length (1 to normal_max lines)
+            if random.random() < 0.9:
+                # Normal length
+                lines_per_image = random.randint(15, 25)
+            else:
+                # Short length for variety
+                normal_max = 25
+                lines_per_image = random.randint(1, normal_max)
             
             if len(lines) >= lines_per_image:
                 start_idx = random.randint(0, len(lines) - lines_per_image)
@@ -80,8 +87,8 @@ class OCRDataGenerator:
             text_content = "\n".join(formatted_lines).strip()
             
             # Validate text content
-            if text_content and len(text_content) > 50:  # Ensure meaningful content
-                return text_content, text_file.stem, f"attempt_{attempt}"
+            if text_content and len(text_content) > 10:  # Lower threshold for short texts
+                return text_content, text_file.stem, f"attempt_{attempt}_lines_{lines_per_image}"
         
         # Fallback: use a simple text chunk
         return "Sample text for OCR training data generation.", "fallback", "simple"
