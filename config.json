@@ -1,0 +1,11 @@
+{
+    "text_folder": "./data/Novel_data_UTF8_processed",
+    "output_folder": "./data/generated", 
+    "font_folder": "./font/latin",
+    "background_folder": "./noise_img/background_p",
+    "stain_folder": "./noise_img/stain_p",
+    "lines_per_image": 30,
+    "max_line_length": 80,
+    "noise_levels": ["0_level", "1_level", "2_level", "3_level", "4_level"],
+    "binarize_probability": 0.1
+}
