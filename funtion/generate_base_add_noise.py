@@ -142,7 +142,7 @@ def generate_base_image(text, preset=1, **kwargs):
         return final_image
 
 
-    font_dir = Path('../font/latin')
+    font_dir = Path('./font/latin')
     font_files = list(font_dir.glob('*.ttf')) + list(font_dir.glob('*.otf'))
     # font_path = random.choice(font_files) if font_files else None
     # font = ImageFont.truetype(str(font_path), font_size)
@@ -258,9 +258,9 @@ def add_noise_and_reduce_resolution(image,preset = "0_level", **kwargs):
             "max_noise_factor": 50, #噪声越大越垃圾
             "min_scale_factor": 0.2,   #画质降低 越小越垃圾
             "blur_radius": 1,         #高斯模糊
-            "background_folder": "../noise_img/background_p",
+            "background_folder": "./noise_img/background_p",
             "bg_intensity": 0.2,          #背景透明度
-            "stain_folder": "../noise_img/stain_p",
+            "stain_folder": "./noise_img/stain_p",
             "st_intensity": 0.6,        #污渍透明度
             "max_stains": 5,    #污渍最大个数
             "contrast_factor": 0.1, 
@@ -343,9 +343,9 @@ def add_noise_and_reduce_resolution(image,preset = "0_level", **kwargs):
     max_noise_factor = kwargs.get("max_noise_factor", 50)
     min_scale_factor = kwargs.get("min_scale_factor", 0.2)
     blur_radius = kwargs.get("blur_radius", 1)
-    background_folder = kwargs.get("background_folder", "../noise_img/background_p")
+    background_folder = kwargs.get("background_folder", "./noise_img/background_p")
     bg_intensity = kwargs.get("bg_intensity", 0.2)
-    stain_folder = kwargs.get("stain_folder", "../noise_img/stain_p")
+    stain_folder = kwargs.get("stain_folder", "./noise_img/stain_p")
     st_intensity = kwargs.get("st_intensity", 0.8)
     max_stains = kwargs.get("max_stains", 5)
     contrast_factor = kwargs.get("contrast_factor", 0.5)
