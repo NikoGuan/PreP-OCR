@@ -49,7 +49,7 @@ class OCRDataGenerator:
     def __init__(self, max_workers=None):
         """Initialize the generator"""
         self.text_folder = Path("./data/Novel_data_UTF8_processed")
-        self.output_folder = Path("./data/output")
+        self.output_folder = Path("./data/outputgai")
         self.setup_directories()
         self.base_images = []  # Store base images for noise processing
         # 优化worker数量：对于I/O密集型任务，建议使用CPU核心数的1-2倍
@@ -107,6 +107,10 @@ class OCRDataGenerator:
                     formatted_lines.append(line)
             
             text_content = "\n".join(formatted_lines).strip()
+            
+            # Skip if text length exceeds 2500 characters
+            if len(text_content) > 2500:
+                continue  # Try another text chunk
             
             # Validate text content
             if text_content and len(text_content) > 10:  # Lower threshold for short texts
@@ -256,7 +260,8 @@ class OCRDataGenerator:
             print("No base images available for noise processing")
             return 0
         
-        noise_levels = ["1_level", "2_level", "3_level", "4_level"]
+        # noise_levels = ["1_level", "2_level", "3_level", "4_level"]
+        noise_levels = ["default"]
         total_success = 0
         
         # Create all tasks (base_image, level) combinations

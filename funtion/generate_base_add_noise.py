@@ -252,26 +252,30 @@ def generate_base_image(text, preset=1, **kwargs):
     if apply_bend:
         final_image = apply_random_bend(final_image)
 
+    # Limit image width to 1333 pixels
+    # if final_image.width > 1333:
+
+
     return final_image
 
 #Noise
 def add_noise_and_reduce_resolution(image,preset = "0_level", **kwargs):
     noise_parameters = {
         "default": {
-            "max_noise_factor": 50, #噪声越大越垃圾
-            "min_scale_factor": 0.2,   #画质降低 越小越垃圾
+            "max_noise_factor": 40, #噪声越大越垃圾
+            "min_scale_factor": 0.8,   #画质降低 越小越垃圾
             "blur_radius": 1,         #高斯模糊
             "background_folder": "./noise_img/background_p",
-            "bg_intensity": 0.2,          #背景透明度
+            "bg_intensity": 0.6,          #背景透明度
             "stain_folder": "./noise_img/stain_p",
-            "st_intensity": 0.6,        #污渍透明度
-            "max_stains": 5,    #污渍最大个数
-            "contrast_factor": 0.1, 
+            "st_intensity": 0.8,        #污渍透明度
+            "max_stains": 7,    #污渍最大个数
+            "contrast_factor": 0.7, 
             "black_size": 1,          #黑点尺寸
             "black_number": 1000,       #黑点的个数=总像素/这个数值    数值越大黑点越少
             "white_size": 10, #白点尺寸
-            "white_number": 200,     #白点的个数=总像素/这个数值    数值越大黑点越少
-            "line_number": 10
+            "white_number": 100,     #白点的个数=总像素/这个数值    数值越大黑点越少
+            "line_number": 30
         },
         "0_level": {
             "max_noise_factor": 0,
@@ -395,6 +399,10 @@ def add_noise_and_reduce_resolution(image,preset = "0_level", **kwargs):
     
     # image = add_stain_overlay(image,"../noise_img/stain_p")
     image = image.convert("L")
+    scale_factor = 1000 / image.width
+    new_width = 1000
+    new_height = int(image.height * scale_factor)
+    image = image.resize((new_width, new_height), Image.LANCZOS)
     return image
 
 def random_erase_black(image, black_size=1, black_number=1000):
