@@ -48,8 +48,9 @@ class OCRDataGenerator:
     
     def __init__(self, max_workers=None):
         """Initialize the generator"""
-        self.text_folder = Path("./data/Novel_data_UTF8_processed")
-        self.output_folder = Path("./data/outputgai")
+        # self.text_folder = Path("./data/Novel_data_UTF8_processed")
+        self.text_folder = Path("./data/Novel_data_UTF8_new")
+        self.output_folder = Path("./data/outputgai3")
         self.setup_directories()
         self.base_images = []  # Store base images for noise processing
         # 优化worker数量：对于I/O密集型任务，建议使用CPU核心数的1-2倍
