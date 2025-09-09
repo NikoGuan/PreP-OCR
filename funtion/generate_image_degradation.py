@@ -467,8 +467,8 @@ if __name__ == "__main__":
     # 如果直接运行脚本，使用默认参数
     if len(os.sys.argv) == 1:
         # 默认处理示例
-        input_folder = "/home/ubuntu/PreP-OCR/data/outputgai3/noisy"
-        output_folder = "/home/ubuntu/PreP-OCR/data/outputgai3/noisy_pad"
+        input_folder = "/home/ubuntu/PreP-OCR/data/output_sft_pure_align/noisy"
+        output_folder = "/home/ubuntu/PreP-OCR/data/output_sft_pure_align/noisy_pad"
         
         print(f"使用默认路径:")
         print(f"输入文件夹: {input_folder}")
