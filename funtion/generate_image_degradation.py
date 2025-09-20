@@ -26,19 +26,22 @@ def add_random_degradation_patches(image, num_patches=None, min_size=15, max_siz
         # 根据图像尺寸动态计算区域数量
         # 基础数量：每10万像素约12-20个区域
         base_patches_per_100k = random.randint(12, 20)
-        calculated_patches = int((image_area / 100000) * base_patches_per_100k)
+        calculated_patches = int((image_area / 40000) )
         
         # 设置最小和最大值范围（从0开始）
-        min_patches = 0  # 从0开始
+        min_patches = calculated_patches  # 从0开始
         max_patches = calculated_patches + 10  # 最多40个
         
         # 在计算出的范围内随机选择
         num_patches = random.randint(min_patches, max_patches)
+        # num_patches = 30
         
     # 根据图像尺寸调整区域大小范围
     adjusted_min_size = max(8, int(min_size * scale_factor))
     calculated_max_size = int(max_size * scale_factor)
     adjusted_max_size = max(adjusted_min_size + 5, calculated_max_size)
+    adjusted_min_size = 100
+    adjusted_max_size = 150
     
     for _ in range(num_patches):
         # 随机生成区域大小（根据图像尺寸调整）
@@ -467,8 +470,8 @@ if __name__ == "__main__":
     # 如果直接运行脚本，使用默认参数
     if len(os.sys.argv) == 1:
         # 默认处理示例
-        input_folder = "/home/ubuntu/PreP-OCR/data/output_sft_pure_align/noisy"
-        output_folder = "/home/ubuntu/PreP-OCR/data/output_sft_pure_align/noisy_pad"
+        input_folder = "/home/ubuntu/PreP-OCR/data/outputgai3/noisy"
+        output_folder = "/home/ubuntu/PreP-OCR/data/outputgai3/noisy_pad2"
         
         print(f"使用默认路径:")
         print(f"输入文件夹: {input_folder}")
