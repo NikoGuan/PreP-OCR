@@ -13,7 +13,7 @@ This repository contains the implementation of PreP-OCR, a two-stage pipeline fo
 1. **Stage 1: Document Image Restoration** - Applies deblurring models trained on synthetic data to restore degraded document images
 2. **Stage 2: Post-OCR Linguistic Correction** - Applies ByT5-based error correction on OCR outputs
 
-**Current Release**: This repository currently provides the synthetic data generation component used for training the image restoration models. For post-OCR correction techniques, please refer to our previous work: [https://aclanthology.org/2024.emnlp-main.862/](https://aclanthology.org/2024.emnlp-main.862/)
+**Current Release**: This repository provides synthetic data generation tools for training image restoration models, as well as pre-trained deblurring model weights. For post-OCR correction techniques, please refer to our previous work: [https://aclanthology.org/2024.emnlp-main.862/](https://aclanthology.org/2024.emnlp-main.862/)
 
 ## Key Features
 
