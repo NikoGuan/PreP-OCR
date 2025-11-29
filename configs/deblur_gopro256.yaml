@@ -1,0 +1,145 @@
+trainer:
+  target: trainer.TrainerDifIRLPIPS
+
+model:
+  target: models.unet.UNetModelSwin
+  ckpt_path: /home/shuhaog/ResShift/logs/no_aug/2025-01-10-01-55/ema_ckpts/ema_model_11000.pth
+  params:
+    image_size: 64
+    in_channels: 3
+    model_channels: 160  # 160
+    out_channels: 3
+    attention_resolutions: [64,32,16,8]
+    dropout: 0
+    channel_mult: [1, 2, 2, 4]   # 1224
+    num_res_blocks: [2, 2, 2, 2]
+    conv_resample: True
+    dims: 2
+    use_fp16: False
+    num_head_channels: 32
+    use_scale_shift_norm: True
+    resblock_updown: False
+    swin_depth: 2
+    swin_embed_dim: 192
+    window_size: 8
+    mlp_ratio: 4
+    cond_lq: True
+    lq_size: 256
+
+diffusion:
+  target: models.script_util.create_gaussian_diffusion
+  params:
+    sf: 1
+    schedule_name: exponential
+    schedule_kwargs:
+      power: 0.3
+    etas_end: 0.99
+    steps: 4
+    min_noise_level: 0.2
+    kappa: 2.0
+    weighted_mse: False
+    predict_type: xstart
+    timestep_respacing: ~
+    scale_factor: 1.0
+    normalize_input: True
+    latent_flag: True
+
+autoencoder:
+  target: ldm.models.autoencoder.VQModelTorch
+  # ckpt_path: /mnt/sfs-common/zsyue/modelbase/ResShift/weights/autoencoder/autoencoder_vq_f4.pth
+  ckpt_path: /home/shuhaog/ResShift/weights/autoencoder_vq_f4.pth
+  tune_decoder: False
+  params:
+    embed_dim: 3
+    n_embed: 8192
+    ddconfig:
+      double_z: False
+      z_channels: 3
+      resolution: 256
+      in_channels: 3
+      out_ch: 3
+      ch: 128
+      ch_mult:
+      - 1
+      - 2
+      - 4
+      num_res_blocks: 2
+      attn_resolutions: []
+      dropout: 0.0
+      padding_mode: zeros
+
+lpips:
+  net: alex
+
+data:
+  train:
+    type: paired
+    params:
+      dir_path: /home/shuhaog/ResShift/image_data/train/lq
+      dir_path_extra: /home/shuhaog/ResShift/image_data/train/gt
+      # transform_type: rcrop_aug_norm
+      transform_type: ocr
+      transform_kwargs:
+        pass_aug: True
+        pch_size: 256
+        mean: 0.5
+        std: 0.5
+        max_value: 255
+      im_exts: jpg
+      length: ~
+      recursive: False
+  val:
+    type: paired
+    params:
+      dir_path: /home/shuhaog/ResShift/image_data/test/lq
+      dir_path_extra: /home/shuhaog/ResShift/image_data/test/gt
+      transform_type: ocr
+      transform_kwargs: 
+        pass_aug: True
+        pch_size: 256
+        mean: ${data.train.params.transform_kwargs.mean}
+        std: ${data.train.params.transform_kwargs.std}
+        max_value: ${data.train.params.transform_kwargs.max_value}
+      im_exts: jpg
+      # length: 32
+      length: 64
+      recursive: False
+
+train:
+  # learning rate
+  lr: 5e-5                      # learning rate 
+  lr_min: 2e-5                      # learning rate 
+  lr_schedule: cosin
+  warmup_iterations: 0
+  # dataloader
+  # batch: [64, 4] 
+  batch: [32, 4]                
+  # microbatch: 8
+  microbatch: 5
+  num_workers: 4
+  prefetch_factor: 2            
+  # optimization settings
+  weight_decay: 0               
+  ema_rate: 0.999
+  iterations: 300000            # total iterations
+  # save logging
+  save_freq: 1000
+  # log_freq: [500, 5000, 4]     # [training loss, training images, val images]
+  log_freq: [50, 50, 2]     # [training loss, training images, val images]
+  loss_coef: [1.0, 4.0, 0.0]    # [latent-mse, pixel-lpips, pixel-mse]
+  local_logging: True           # manually save images
+  tf_logging: False             # tensorboard logging
+  # validation settings
+  use_ema_val: True            
+  val_freq: ${train.save_freq}
+  val_y_channel: True
+  val_resolution: ${model.params.lq_size}
+  val_padding_mode: reflect
+  # training setting
+  use_amp: True                # amp training
+  seed: 123456                 # random seed
+  global_seeding: False
+  # model compile
+  compile:
+    flag: False
+    mode: reduce-overhead      # default, reduce-overhead

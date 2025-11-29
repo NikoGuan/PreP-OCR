@@ -10,7 +10,7 @@
 
 This repository contains the implementation of PreP-OCR, a two-stage pipeline for enhancing OCR accuracy on historical documents:
 
-1. **Stage 1: Document Image Restoration** - Uses synthetic training data to restore degraded document images
+1. **Stage 1: Document Image Restoration** - Applies deblurring models trained on synthetic data to restore degraded document images
 2. **Stage 2: Post-OCR Linguistic Correction** - Applies ByT5-based error correction on OCR outputs
 
 **Current Release**: This repository currently provides the synthetic data generation component used for training the image restoration models. For post-OCR correction techniques, please refer to our previous work: [https://aclanthology.org/2024.emnlp-main.862/](https://aclanthology.org/2024.emnlp-main.862/)
@@ -73,6 +73,11 @@ This synthetic data generation tool is designed for:
 - **Document Image Restoration** research
 - **Multi-lingual OCR** system development
 
-## Model Parameters
+## Model Weights
 
-Pre-trained model parameters will be released soon.
+### Document Image Deblurring Model
+
+**Download Links:**
+- Model Checkpoint: [resshift_deblur_prep_ocr.pth](https://huggingface.co/ShuhaoGuan/prep-ocr-resshift-deblur/resolve/main/resshift_deblur_prep_ocr.pth) (457MB)
+- VQ-VAE Autoencoder: [autoencoder_vq_f4.pth](https://github.com/zsyOAOA/ResShift/releases/download/v2.0/autoencoder_vq_f4.pth)
+- Model Configuration: [deblur_gopro256.yaml](configs/deblur_gopro256.yaml)
